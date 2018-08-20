@@ -1,9 +1,9 @@
 import {IComponent} from "IComponent";
-import {ComponentInitializer} from "ComponentInitializer";
+import {ComponentRegistry} from "ComponentRegistry";
 
 export abstract class Component extends HTMLElement implements IComponent{
-  abstract selector: string;
-  abstract template: string;
+  selector: string = "";
+  template: string = "";
   abstract render(): void;
 
   constructor() {
@@ -13,11 +13,17 @@ export abstract class Component extends HTMLElement implements IComponent{
 
   initializeComponent () {
     console.log("Initializing component");
-    let shadowRoot = this.attachShadow({mode: 'open'});
-    shadowRoot.innerHTML = this.template;
+    //let shadowRoot = this.attachShadow({mode: 'open'});
+    console.log("HERE IS THE TEMPLATE VALUE");
+    console.log(this.template);
+    //shadowRoot.innerHTML = this.template;
     //customElements.define(this.selector, this);
     console.log(this);
-    ComponentInitializer.addComponent(this);
-    this.render();
+    //ComponentRegistry.addComponent(this);
+    //this.render();
+  }
+
+  connectedCallback() {
+    console.log("CONNECTED CALLBACK FUNCTION CALLED");
   }
 }
