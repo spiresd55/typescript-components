@@ -1,24 +1,19 @@
-import {Component} from "../../Component";
+//import {Component} from "../../Component";
+import {CustomElement} from "../../ComponentDecorator";
 
-export class TestComponent extends Component {
+@CustomElement({
+  selector: 'test-component',
+  template: '<p>Test Component is here </p>',
+  useShadow: true
+})
+export class TestComponent extends HTMLElement {
   template: string = `<p>test component</p>`;
 
   constructor() {
     super();
-
-    //const shadowRoot = this.attachShadow({mode: 'open'});
-    //shadowRoot.innerHTML = "<h1>TEST COMPONENT</h1>";
-
-    //setTimeout(() => {
-    //  shadowRoot.innerHTML = "new value";
-    //}, 5000);
   }
 
   connectedCallback() {
     console.log("Calling Connected Callback function");
-  }
-
-  render(): void {
-    console.log("Calling Render Function");
   }
 }

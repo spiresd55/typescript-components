@@ -13,12 +13,12 @@ export class ComponentRegistry {
       console.log("ADDING COMPONENT");
       console.log(component);
       //this.components.push(component);
-      customElements.define(componentName, component);
+      //customElements.define(componentName, component);
       let comp = new component();
-      const shadowRoot = comp.attachShadow({mode: 'open'});
-      console.log("SHADOW TEMPLATE");
-      console.log(comp.template);
-      shadowRoot.innerHTML = comp.template;
+      //const shadowRoot = comp.attachShadow({mode: 'open'});
+      //console.log("SHADOW TEMPLATE");
+      //console.log(comp.template);
+      //shadowRoot.innerHTML = comp.template;
       this.componentMap.set(componentName, comp);
     }
 

@@ -5,5 +5,5 @@ export interface IComponent { //All components in this project need to implement
     //connectedCallback: () => void; //This is where render needs to run
     template: string;
     //selector: string; // Selector for component
-    initializeComponent: () => void; //Used in base classes to initialize component
+    initializeComponent: (name: string) => void; //Used in base classes to initialize component
 }

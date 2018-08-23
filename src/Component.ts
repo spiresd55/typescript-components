@@ -8,10 +8,9 @@ export abstract class Component extends HTMLElement implements IComponent{
 
   constructor() {
     super();
-    this.initializeComponent();
   }
 
-  initializeComponent () {
+  initializeComponent(name: string) {
     console.log("Initializing component");
     //let shadowRoot = this.attachShadow({mode: 'open'});
     console.log("HERE IS THE TEMPLATE VALUE");
@@ -21,6 +20,9 @@ export abstract class Component extends HTMLElement implements IComponent{
     console.log(this);
     //ComponentRegistry.addComponent(this);
     //this.render();
+    const shadowRoot = this.attachShadow({mode: 'open'});
+    customElements.define(name, Component);
+    shadowRoot.innerHTML = this.template;
   }
 
   connectedCallback() {
