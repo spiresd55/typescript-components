@@ -9,11 +9,15 @@
     <!--Custom Line Component Initialized-->
     <div class="container">
         <p>Testing Typescript Components</p>
-        <test-component></test-component>
+        <test-component data="12345678"></test-component>
     </div>
 
+    <!-- load webcomponents bundle, which includes all the necessary polyfills -->
+    <script src="node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
     <script src="node_modules/jquery/dist/jquery.min.js"></script>
     <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="node_modules/knockout/build/output/knockout-latest.js"></script>
+      <!--/Users/rr505398/Desktop/project-stuff/typescript-components/node_modules/knockout/build/output/knockout-latest.js-->
     <script src="bundle.js"></script>
 </body>
 </html>

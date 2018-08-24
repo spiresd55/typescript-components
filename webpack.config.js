@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 
 module.exports = {
     entry: './src/index.ts',
@@ -12,7 +13,7 @@ module.exports = {
                     configFileName: 'tsconfig.json'
                 },
                 exclude: [
-                    /\.(e2e)\.ts$/
+                    /(\.(e2e)\.ts$)/
                 ]
             }
         ]
@@ -23,5 +24,14 @@ module.exports = {
     output: {
         filename: 'bundle.js',
         path: path.resolve(__dirname, 'dist')
-    }
+    },
+    externals: {
+		    'ko': 'ko'
+    },
+    plugins: [
+      new webpack.ProvidePlugin({
+        'ko': 'ko',
+        'window.ko': 'ko'
+      })
+    ]
 };
