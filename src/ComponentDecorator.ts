@@ -14,15 +14,16 @@ const validateSelector = (selector: string) => {
     }
 };
 
-export const ComponentAttribute = (target: any, key: string) => {
-  console.log("Here is the target");
+export const ComponentAttribute = function (target: any, property: string): any {
+  /*.log("Here is the target");
   console.log(target);
   console.log("Here is the key");
   console.log(key);
   let getMethodName = 'get' + key.charAt(0).toUpperCase() + key.slice(1);
-  let setMethodName = 'set' + key.charAt(0).toUpperCase() + key.slice(1);
-
-  target[getMethodName] = () => {
+  let setMethodName = 'set' + key.charAt(0).toUpperCase() + key.slice(1);*/
+   console.log("TARGET");
+   console.log(target.prototype);
+  /*target[getMethodName] = () => {
     console.log("Calling Get");
     console.log(target);
     console.log(this);
@@ -32,7 +33,31 @@ export const ComponentAttribute = (target: any, key: string) => {
   target[setMethodName] = (val: any) => {
     console.log("Calling Set");
     return target.setAttribute(key);
+  }*/
+  let val: any;
+  return{
+    set: function (value: any) {
+      return this.setAttribute(property, value);
+    },
+    get: function() {
+      return this.getAttribute(property);
+    },
+    enumerable: true,
+    configurable: true
   }
+  /*Object.defineProperty(target.prototype, property, {
+    set: function (value: any) {
+      val = value;
+      console.log(target);
+      //return target.setAttribute(property, value);
+    },
+    get: function() {
+      //return val;
+      //return target.getAttribute(property);
+    },
+    enumerable: true,
+    configurable: true
+  });*/
 }
 
 export const CustomComponent = (config: CustomComponentConfig) => (cls: any) => {

@@ -13,10 +13,8 @@ import * as ko from "knockout";
   }
 })
 export class TestComponent extends HTMLElement {
-  template: string = `<p>test component <span></span></p>`;
-
   @ComponentAttribute
-  data: string;
+  random: string;
 
   constructor() {
     super();
@@ -26,9 +24,11 @@ export class TestComponent extends HTMLElement {
     console.log("Calling Connected Callback function");
     console.log("HERE IS THE MODEL");
     console.log((this as any).model);
-    console.log(this.data);
-    this.data = "12345678";
+    console.log(this.random);
+    this.random = "12345678";
     //console.log((this as any).getData());
-    console.log(this);
+    console.log(this.random);
+    console.log("After connected");
+    console.log(this.getAttribute("random"));
   }
 }
