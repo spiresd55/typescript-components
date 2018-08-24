@@ -14,26 +14,32 @@ const validateSelector = (selector: string) => {
     }
 };
 
-export const ComponentAttribute = function (target: any, property: string): any {
-  /*.log("Here is the target");
-  console.log(target);
-  console.log("Here is the key");
-  console.log(key);
-  let getMethodName = 'get' + key.charAt(0).toUpperCase() + key.slice(1);
-  let setMethodName = 'set' + key.charAt(0).toUpperCase() + key.slice(1);*/
-   console.log("TARGET");
-   console.log(target.prototype);
-  /*target[getMethodName] = () => {
-    console.log("Calling Get");
+export const WatchAttribute = (name: any, handler: any) => {
+  return (target: any) => {
     console.log(target);
     console.log(this);
-    return target.getAttribute(key);
-  }
+    //Attribute Changed Callback(Called when custom element attr is changed)
+    let attributeChangedCallback = target.prototype.attributeChangedCallback || function(){};
+    let callback = (typeof handler === 'function') ? handler : target.prototype[handler];
 
-  target[setMethodName] = (val: any) => {
-    console.log("Calling Set");
-    return target.setAttribute(key);
-  }*/
+    if(!callback) {
+      throw new Error(`${handler} does not exist on ${name}`);
+    }
+
+    target.prototype.attributeChangedCallback = function(attr: any, oldValue: any, newValue: any) {
+      console.log("ATTRIBUTE CHANGED");
+      console.log(name);
+      console.log(attr);
+      if(name == attr) {
+        callback.call(this, oldValue, newValue);
+      }
+
+      attributeChangedCallback.call(this, attr, oldValue, newValue);
+    }
+  }
+}
+
+export const ComponentAttribute = function (target: any, property: string): any {
   let val: any;
   return{
     set: function (value: any) {
@@ -45,24 +51,39 @@ export const ComponentAttribute = function (target: any, property: string): any 
     enumerable: true,
     configurable: true
   }
-  /*Object.defineProperty(target.prototype, property, {
-    set: function (value: any) {
-      val = value;
-      console.log(target);
-      //return target.setAttribute(property, value);
+}
+
+export const KnockoutAttribute = function(target: any, property: string): any {
+  let val: any;
+  console.log(target);
+  console.log(this);
+  return {
+    set: function(value: any) {
+      if (!this.model) {
+        throw new Error("No knockout model defined");
+      };
+      if (!this.model[property]) {
+        throw new Error(`CustomComponent requires ${property} propery in model metadata`);
+      }
+      //TODO: HANDLE ARRAYS AND FUNCTIONS
+      this.model[property](value);
+      return this.setAttribute(property, value);
     },
     get: function() {
-      //return val;
-      //return target.getAttribute(property);
+      return this.getAttribute(property);
     },
     enumerable: true,
     configurable: true
-  });*/
+  }
 }
 
 export const CustomComponent = (config: CustomComponentConfig) => (cls: any) => {
   validateSelector(config.selector);
 
+  console.log("Custom Component");
+  console.log(cls.template);
+  console.log(cls);
+  console.log(this);
   if(!config.template) {
     throw new Error("You need to pass a template for the element");
   }
@@ -91,5 +112,15 @@ export const CustomComponent = (config: CustomComponentConfig) => (cls: any) => 
   //TODO: Create a way to attach to shadowdom
 
   //Register the custom element
-  window.customElements.define(config.selector, cls);
+  window.customElements.define(config.selector, cls)
+}
+
+//TODO: Write event binding decorator
+export const EventBinding = () => (cls: any) => {
+
+}
+
+//TODO: Write event listener decorator
+export const Listen = () => () => {
+
 }

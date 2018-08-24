@@ -10,28 +10,25 @@ import * as ko from "knockout";
 
 //TODO: Try Binding events to knockout
 @CustomComponent({
-  selector: 'test-component',
-  template: `<div><p>Test Component is here <span data-bind="text: test"></span>
+  selector: 'child-component',
+  template: `<p>Child Component is here <span data-bind="text: test"></span>
     <span data-bind="text: data"></span>
   </p>
-  <hr />
-  <child-component testFunction="function() {console.log('test function called')}"></child-component>
-  </div>
   `,
   model: {
     test: ko.observable('test'),
-    data: ko.observable('0000'),
+    data: ko.observable('0000')
   }
 })
-//@WatchAttribute('random', 'handleRandom')
-export class TestComponent extends HTMLElement {
+export class ChildTestComponent extends HTMLElement {
   @ComponentAttribute
   random: string;
 
   @KnockoutAttribute
   data: any;
 
-  template: 'test';
+  @ComponentAttribute
+  testFunction: any;
 
   static get observedAttributes() {return ['random', 'data']; }
   constructor() {
@@ -40,7 +37,9 @@ export class TestComponent extends HTMLElement {
 
   connectedCallback() {
     //Run This Component afterwards
-    this.data = 12345678;
+    this.data = 12345678910;
+    console.log(this.testFunction);
+    this.testFunction();
   }
 
   // HOW TO HANDLE ATTRIBUTE CHANGE CALLBACKS
@@ -51,9 +50,5 @@ export class TestComponent extends HTMLElement {
     if(attr == 'data') {
       console.log("Data Value Changed");
     }
-  }
-
-  testFunction() {
-    console.log("TEST FUNCTION CALLED");
   }
 }
