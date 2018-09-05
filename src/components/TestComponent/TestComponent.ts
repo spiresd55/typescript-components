@@ -20,7 +20,7 @@ import * as ko from "knockout";
   `,
   model: {
     test: ko.observable('test'),
-    data: ko.observable('0000'),
+    data: ko.observable('0000')
   }
 })
 //@WatchAttribute('random', 'handleRandom')
@@ -31,7 +31,7 @@ export class TestComponent extends HTMLElement {
   @KnockoutAttribute
   data: any;
 
-  template: 'test';
+  template:string = 'test template';
 
   static get observedAttributes() {return ['random', 'data']; }
   constructor() {
@@ -41,6 +41,8 @@ export class TestComponent extends HTMLElement {
   connectedCallback() {
     //Run This Component afterwards
     this.data = 12345678;
+    console.log("Here is the model")
+    console.log((this as any).model);
   }
 
   // HOW TO HANDLE ATTRIBUTE CHANGE CALLBACKS

@@ -19,7 +19,10 @@ module.exports = {
         ]
     },
     resolve: {
-        extensions: [ '.tsx', '.ts', '.js' ]
+        extensions: [ '.tsx', '.ts', '.js' ],
+        alias: {
+          decorators: path.resolve(__dirname, 'src/decorators/index')
+        }
     },
     output: {
         filename: 'bundle.js',

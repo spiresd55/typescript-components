@@ -39,7 +39,7 @@ export class ChildTestComponent extends HTMLElement {
     //Run This Component afterwards
     this.data = 12345678910;
     console.log(this.testFunction);
-    this.testFunction();
+    //this.testFunction();
   }
 
   // HOW TO HANDLE ATTRIBUTE CHANGE CALLBACKS
