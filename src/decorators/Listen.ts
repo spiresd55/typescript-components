@@ -1,3 +1,5 @@
+import {ComponentRegistry} from "../ComponentRegistry";
+
 export const Listen2 = function(eventConfig: any) {
   return function decorator(target: any, property: string, descriptor: any) {
     // Tap into the original function
@@ -27,8 +29,10 @@ export const Listen2 = function(eventConfig: any) {
 
 //HOW TO DEFINE A DECORATOR THAT RUNS ON INSTANCE NOT DESIGN
 export const Listen = function(eventConfig: any) {
+  let componentRegistry = ComponentRegistry.getInstance();
   return function(target: any,name: string ,descriptor: any) {
     const {value} = descriptor;
+    componentRegistry.addEvent(target, value );
     delete descriptor.value;
     delete descriptor.writable;
     descriptor.get = function() {
@@ -59,6 +63,7 @@ export const Listen = function(eventConfig: any) {
       return this[name];
     }
     console.log(descriptor)
+    console.log(target);
     console.log("D");
   }
 }

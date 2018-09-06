@@ -26,6 +26,7 @@ export default function(config: CustomComponentConfig) {
     }
     template.innerHTML = config.template;
     //cls.prototype.listeners = [];
+    //cls.prototype.
     const connectedCallback = cls.prototype.connectedCallback || function () {};
     cls.prototype.connectedCallback = function() {
         console.log('HERE IS CONNECTED CALLBACK');

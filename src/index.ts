@@ -11,9 +11,9 @@ import {BasicComponent2} from "./componentsV2/BasicComponent2";
 //customElements.define('test-component', TestComponent);
 console.log("Initializing Components");
 //let test = new TestComponent(); //TODO: AUTO GENERATE THIS
-let componentRegistry = new ComponentRegistry();
+let componentRegistry = ComponentRegistry.getInstance();
 //componentRegistry.addComponent("child-component", ChildTestComponent);
 //componentRegistry.addComponent("test-component", TestComponent);
 //componentRegistry.addComponent("basic-component", BasicComponent);
 componentRegistry.addComponent("basic-component2", BasicComponent2);
-componentRegistry.initialize();
+//componentRegistry.initialize();
