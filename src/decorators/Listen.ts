@@ -1,4 +1,6 @@
 import {ComponentRegistry} from "../ComponentRegistry";
+import {IdGenerator} from "../util/IdGenerator";
+
 
 export const Listen2 = function(eventConfig: any) {
   return function decorator(target: any, property: string, descriptor: any) {
@@ -32,7 +34,16 @@ export const Listen = function(eventConfig: any) {
   let componentRegistry = ComponentRegistry.getInstance();
   return function(target: any,name: string ,descriptor: any) {
     const {value} = descriptor;
-    componentRegistry.addEvent(target, value );
+    if(!target.componentId) {
+        target.componentId = IdGenerator.generateRandomId();
+    }
+    console.log("LISTEN TARGET");
+    console.log(target);
+    console.log(target.componentId);
+    if(!target.componentId) {
+      target.componentId = IdGenerator.generateRandomId();
+    }
+    componentRegistry.addEvent(target.componentId, value );
     delete descriptor.value;
     delete descriptor.writable;
     descriptor.get = function() {

@@ -1,5 +1,5 @@
 import {IComponent} from "./IComponent";
-
+import {ComponentRegistry} from "../ComponentRegistry";
 
 export abstract class Component extends HTMLElement implements IComponent{
   selector: string = "";
@@ -7,8 +7,14 @@ export abstract class Component extends HTMLElement implements IComponent{
   model: any = {};
   element: any = null;
   listeners: any[] = [];
+  componentRegistry: ComponentRegistry;
 
   abstract render(): void;
+
+  constructor() {
+    super();
+    this.componentRegistry = ComponentRegistry.getInstance();
+  }
 
   connectedCallback() {
     console.log("CONNECTED CALLBACK FUNCTION CALLED");
@@ -22,7 +28,9 @@ export abstract class Component extends HTMLElement implements IComponent{
 
   registerEventListeners() {
     console.log("Here are the event listeners");
+    console.log((this as any).componentId);
     console.log(this.listeners);
+    console.log(this.componentRegistry.getEvents((this as any).componentId));
     //console.log((this as any).testFunction);
     //console.log((this as any).testFunction.name);
     //console.log((this as any).testFunction());

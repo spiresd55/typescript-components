@@ -2,12 +2,12 @@ import {IComponent} from "./IComponent";
 
 export class ComponentRegistry {
     private componentMap: Map<string, any>; //TODO: ADD TYPE TO THIS
-    private eventMap: WeakMap<any, any>; //TODO: ADD TYPE TO THIS
+    private eventMap: Map<string, any>; //TODO: ADD TYPE TO THIS
     private static instance: ComponentRegistry;
 
     constructor() {
       this.componentMap = new Map<string, any>();
-      this.eventMap = new WeakMap<any, any[]>();
+      this.eventMap = new Map<string, any[]>();
     }
 
     static getInstance() {
@@ -23,17 +23,30 @@ export class ComponentRegistry {
       this.componentMap.set(componentName, comp);
     }
 
-    public addEvent(component: any, event: any) { //TODO: replace with types
+    public addEvent(componentId: string, event: any) { //TODO: replace with types
       //this.eventMap.set(component, event);
-      if(!this.eventMap.get(component)) {
+      console.log("ADDING EVENT");
+      console.log(componentId);
+      if(!this.eventMap.get(componentId)) {
         let eventCollection = []; //TODO: REFACTOR THIS CODE
         eventCollection.push(event);
-        this.eventMap.set(component, eventCollection);
+        console.log("component undefined")
+        console.log(eventCollection);
+        this.eventMap.set(componentId, eventCollection);
       } else {
-        let eventCollection = this.eventMap.get(component);
+        let eventCollection = this.eventMap.get(componentId);
         eventCollection.push(event);
-        this.eventMap.set(component, eventCollection);
+        console.log("component defined")
+        console.log(eventCollection);
+        this.eventMap.set(componentId, eventCollection);
       }
+    }
+
+    public getEvents(componentId: string) {
+      console.log("Getting events");
+      console.log(componentId);
+      console.log(this.eventMap);
+      return this.eventMap.get(componentId);
     }
 
     public removeComponent(component: IComponent) {
