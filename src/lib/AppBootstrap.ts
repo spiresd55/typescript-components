@@ -1,4 +1,5 @@
 import {ComponentRegistry} from "./ComponentRegistry";
+import {Logger} from "../util/Logger";
 
 export class AppBootstrap {
   private static instance: AppBootstrap;
@@ -14,6 +15,7 @@ export class AppBootstrap {
   }
 
   public initialize() {
+    Logger.debug("Typescript Components App is initializing");
     this.componentRegistry = ComponentRegistry.getInstance();
   }
 }
