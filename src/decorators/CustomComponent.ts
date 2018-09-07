@@ -12,6 +12,7 @@ const validateSelector = (selector: string) => {
     }
 };
 
+//TODO: When child components are in a shadow, automatically change to shadow
 export default function(config: CustomComponentConfig) {
   return function (cls: any) {
     validateSelector(config.selector);
@@ -29,9 +30,7 @@ export default function(config: CustomComponentConfig) {
     //cls.prototype.
     const connectedCallback = cls.prototype.connectedCallback || function () {};
     cls.prototype.connectedCallback = function() {
-        console.log('HERE IS CONNECTED CALLBACK');
-        console.log(this);
-        //this.element
+
         const clone = document.importNode(template.content, true);
         if (config.useShadow) {
             console.log('test1');

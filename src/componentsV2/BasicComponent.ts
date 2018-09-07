@@ -4,7 +4,7 @@ CustomComponent,
 Listen,
 Event,
 KnockoutAttribute,
-ComponentAttribute } from "../ComponentDecorator";
+ComponentAttribute } from "../decorators/index";
 
 import {Component} from "./CustomComponent";
 
@@ -16,14 +16,12 @@ import * as ko from "knockout";
 //TODO: Try Binding events to knockout
 @CustomComponent({
   selector: 'basic-component',
-  template: `<slot>
- <p>I'm some default content!</p>
-</slot>
-  `,
+  template: `<p id="test">I'm some default content!</p>`,
   model: {
     test: ko.observable('test'),
     data: ko.observable('0000')
-  }
+  },
+  useShadow: true
 })
 //@WatchAttribute('random', 'handleRandom')
 export class BasicComponent extends Component {
@@ -49,8 +47,8 @@ export class BasicComponent extends Component {
     }, 5000);
   }
 
-  @Listen({event: 'click', selector: 'basic-component'})
-  testFunction() {
+  @Listen({event: 'click', selector: '#test', inShadow: true})
+  testFunction(e: any) {
     console.log("Test Function Called");
   }
 

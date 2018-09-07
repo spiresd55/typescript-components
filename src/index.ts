@@ -14,6 +14,6 @@ console.log("Initializing Components");
 let componentRegistry = ComponentRegistry.getInstance();
 //componentRegistry.addComponent("child-component", ChildTestComponent);
 //componentRegistry.addComponent("test-component", TestComponent);
-//componentRegistry.addComponent("basic-component", BasicComponent);
+componentRegistry.addComponent("basic-component", BasicComponent);
 componentRegistry.addComponent("basic-component2", BasicComponent2);
 //componentRegistry.initialize();
