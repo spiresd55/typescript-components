@@ -1,3 +1,5 @@
+import {AppBootstrap} from "../lib/AppBootstrap";
+
 interface CustomComponentConfig {
   selector: string;
   template: string;
@@ -48,6 +50,6 @@ export default function(config: CustomComponentConfig) {
     };
 
     //Register the custom element
-    window.customElements.define(config.selector, cls)
+    window.customElements.define(config.selector, cls);
   }
 }
