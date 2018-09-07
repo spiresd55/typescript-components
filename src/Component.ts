@@ -4,10 +4,12 @@ import {ComponentRegistry} from "ComponentRegistry";
 export abstract class Component extends HTMLElement implements IComponent{
   selector: string = "";
   template: string = "";
+  componentRegistry: ComponentRegistry;
   abstract render(): void;
 
   constructor() {
     super();
+    this.componentRegistry = ComponentRegistry.getInstance();
   }
 
   initializeComponent(name: string) {

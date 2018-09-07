@@ -16,9 +16,9 @@ import * as ko from "knockout";
   selector: 'basic-component2',
   template: `<div>
     <h6>Component Header</h6>
-    <!--<basic-component id="child">
+    <basic-component id="child">
     <p>TEST CONTENT</p>
-    </basic-component>-->
+    </basic-component>
   </div>
   `,
   model: {
@@ -41,21 +41,22 @@ export class BasicComponent2 extends Component {
   }
 
   render() {
-    console.log("Render Called");
-    console.log(this.element);
-    console.log(this.shadowRoot.querySelector('basic-component'));
-    console.log(document.querySelector('body'));
+    //console.log("Render Called");
+    //console.log(this.element);
+    //console.log(this.shadowRoot.querySelector('basic-component'));
+    //console.log(document.querySelector('body'));
     //console.log(this.element.shadowRoot);
   }
 
   @Listen({event: 'click', selector: 'basic-component', inShadow: true})
-  testFunction() {
-    console.log("Test Function Called");
+  testFunction(e: any) {
+    console.log(e);
+    console.log("Test Function Called Again");
   }
 
   @Listen({event: 'customEvent', selector: '#child', inShadow: true})
   customEventListener(event: any) {
-    console.log("EVENT")
+    console.log("CUSTOM EVENT LISTENER")
     console.log(event);
   }
 }

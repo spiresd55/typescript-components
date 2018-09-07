@@ -1,3 +1,5 @@
+import {AppBootstrap} from "../lib/AppBootstrap";
+
 interface CustomComponentConfig {
   selector: string;
   template: string;
@@ -12,6 +14,7 @@ const validateSelector = (selector: string) => {
     }
 };
 
+//TODO: When child components are in a shadow, automatically change to shadow
 export default function(config: CustomComponentConfig) {
   return function (cls: any) {
     validateSelector(config.selector);
@@ -26,11 +29,10 @@ export default function(config: CustomComponentConfig) {
     }
     template.innerHTML = config.template;
     //cls.prototype.listeners = [];
+    //cls.prototype.
     const connectedCallback = cls.prototype.connectedCallback || function () {};
     cls.prototype.connectedCallback = function() {
-        console.log('HERE IS CONNECTED CALLBACK');
-        console.log(this);
-        //this.element
+
         const clone = document.importNode(template.content, true);
         if (config.useShadow) {
             console.log('test1');
@@ -48,6 +50,6 @@ export default function(config: CustomComponentConfig) {
     };
 
     //Register the custom element
-    window.customElements.define(config.selector, cls)
+    window.customElements.define(config.selector, cls);
   }
 }

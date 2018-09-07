@@ -19,8 +19,13 @@ export class ComponentRegistry {
 
     //TODO: ADD A TYPE TO THIS
     public addComponent(componentName: string, component: any) {
-      let comp = new component();
-      this.componentMap.set(componentName, comp);
+      //TODO: Consider using reflection to retrieve metadata
+      //Adding component
+      if(!this.componentMap.get(componentName)) {
+        let comp = new component();
+        this.componentMap.set(componentName, comp);
+      }
+      //TODO: Eventually add an error here
     }
 
     public addEvent(componentId: string, event: any) { //TODO: replace with types
