@@ -1,7 +1,6 @@
-import {ComponentRegistry} from "../ComponentRegistry";
+import {ComponentRegistry} from "../lib/ComponentRegistry";
 import {IdGenerator} from "../util/IdGenerator";
 
-//HOW TO DEFINE A DECORATOR THAT RUNS ON INSTANCE NOT DESIGN
 //TODO: Handle condition when selector is not found
 export const Listen = function(eventConfig: any) {
   let componentRegistry = ComponentRegistry.getInstance();

@@ -1,4 +1,5 @@
 import {IComponent} from "./IComponent";
+import "reflect-metadata";
 
 export class ComponentRegistry {
     private componentMap: Map<string, any>; //TODO: ADD TYPE TO THIS
@@ -18,14 +19,18 @@ export class ComponentRegistry {
     }
 
     //TODO: ADD A TYPE TO THIS
-    public addComponent(componentName: string, component: any) {
-      //TODO: Consider using reflection to retrieve metadata
+    public addComponent(component: any) {
+      //Reflects properties defined in @Component decorator
+      let componentConfig =
+      (Reflect as any).getMetadata("componentConfig", component);
+
       //Adding component
-      if(!this.componentMap.get(componentName)) {
+      if(!this.componentMap.get(componentConfig.selector)) {
         let comp = new component();
-        this.componentMap.set(componentName, comp);
+        this.componentMap.set(componentConfig.selector, comp);
+      } else {
+        throw new Error(`${componentConfig.selector} is already defined in app`);
       }
-      //TODO: Eventually add an error here
     }
 
     public addEvent(componentId: string, event: any) { //TODO: replace with types

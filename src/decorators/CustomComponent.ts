@@ -1,4 +1,5 @@
 import {AppBootstrap} from "../lib/AppBootstrap";
+import "reflect-metadata";
 
 interface CustomComponentConfig {
   selector: string;
@@ -23,6 +24,9 @@ export default function(config: CustomComponentConfig) {
       throw new Error("You need to pass a template for the element");
     }
 
+    //Allows metadata to be defined at design time
+    (Reflect as any).defineMetadata("componentConfig", config, cls);
+
     const template = document.createElement('template');
     if(config.style) {
       config.template = `<style>${config.style}</style> ${config.template}`;
@@ -35,7 +39,6 @@ export default function(config: CustomComponentConfig) {
 
         const clone = document.importNode(template.content, true);
         if (config.useShadow) {
-            console.log('test1');
             let root = this.attachShadow({mode: 'open'});
             root.appendChild(clone);
             cls.prototype.shadow = root;
