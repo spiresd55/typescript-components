@@ -4,7 +4,7 @@ CustomComponent,
 Listen,
 ComponentAttribute } from "../decorators/index"; //TODO: REMOVE INDEX
 
-import {Component} from "./CustomComponent";
+import {Component} from "../lib/Component";
 
 //import ko from 'ko';
 
