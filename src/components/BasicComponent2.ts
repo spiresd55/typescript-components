@@ -19,6 +19,9 @@ import * as ko from "knockout";
     <basic-component id="child">
     <p>TEST CONTENT</p>
     </basic-component>
+    <basic-component>
+    <p>TEST CONTENT Again</p>
+    </basic-component>
   </div>
   `,
   model: {
@@ -48,13 +51,13 @@ export class BasicComponent2 extends Component {
     //console.log(this.element.shadowRoot);
   }
 
-  @Listen({event: 'click', selector: 'basic-component', inShadow: true})
+  @Listen({event: 'click', selector: 'basic-component'})
   testFunction(e: any) {
     console.log(e);
     console.log("Test Function Called Again");
   }
 
-  @Listen({event: 'customEvent', selector: '#child', inShadow: true})
+  @Listen({event: 'customEvent', selector: '#child'})
   customEventListener(event: any) {
     console.log("CUSTOM EVENT LISTENER")
     console.log(event);

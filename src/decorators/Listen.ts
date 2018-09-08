@@ -1,24 +1,30 @@
 import {ComponentRegistry} from "../lib/ComponentRegistry";
 import {IdGenerator} from "../util/IdGenerator";
+import {Logger} from "../util/Logger";
 
-//TODO: Handle condition when selector is not found
 export const Listen = function(eventConfig: any) {
   let componentRegistry = ComponentRegistry.getInstance();
   return function(target: any,name: string ,descriptor: any) {
+    //TODO: ComponentId can problably be generated in a better location
     if(!target.componentId) {
       target.componentId = IdGenerator.generateRandomId();
     }
 
     let originalFunc = descriptor.value;
     descriptor.value = function() {
-      if(!eventConfig.inShadow) {
-        document.querySelector(eventConfig.selector)
-        .addEventListener(eventConfig.event, originalFunc, true);
-      } else if(eventConfig.inShadow && this.shadowRoot) {
-          this.shadowRoot.querySelector(eventConfig.selector)
+      try {
+        if(eventConfig.global) {
+          document.querySelector(eventConfig.selector)
           .addEventListener(eventConfig.event, originalFunc, true);
-      } else {
-        throw new Error("InShadow property requires the custom element to be a shadowdom");
+        } else {
+          let currentNode = this.shadowRoot ? this.shadowRoot: this;
+          currentNode.querySelector(eventConfig.selector)
+          .addEventListener(eventConfig.event, originalFunc, true);
+        }
+      } catch(e) {
+        //TODO: ADD ACTUAL COMPONENT NAME
+        Logger.warn(`@LISTEN - Selector ${eventConfig.selector}
+           caused the following issue ${e}`);
       }
     }
     componentRegistry.addEvent(target.componentId, descriptor.value);
