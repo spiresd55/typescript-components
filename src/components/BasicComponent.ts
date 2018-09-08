@@ -47,10 +47,15 @@ export class BasicComponent extends Component {
     }, 5000);
   }
 
-  @Listen({event: 'click', selector: '#test', inShadow: true})
+  @Listen({event: 'click', selector: '#test'})
   testFunction(e: any) {
     console.log("Test Function Called");
   }
+
+  /*@Listen({event: 'click', selector: 'body', global: true})
+  globalFunction(e: any) {
+    console.log("Global Function Called");
+  }*/
 
   @Event
   customEvent(data: any) {
