@@ -11,6 +11,13 @@ export abstract class Component extends HTMLElement implements IComponent{
 
   abstract render(): void;
 
+  //TODO: Add Error Handling
+  static get observedAttributes() {
+    let componentId = (Reflect as any).getMetadata("componentId", this).id;
+    let attributes = ComponentRegistry.getInstance().getAttributes(componentId);
+    return attributes;
+  }
+
   constructor() {
     super();
     this.componentRegistry = ComponentRegistry.getInstance();
@@ -25,7 +32,6 @@ export abstract class Component extends HTMLElement implements IComponent{
   registerEventListeners() {
     let events =
     this.componentRegistry.getEvents((this as any).componentId);
-
     //Registering event listeners
     events.forEach((event: any) => {
       event.apply(this);

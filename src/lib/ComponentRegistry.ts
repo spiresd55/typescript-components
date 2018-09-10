@@ -1,14 +1,18 @@
 import {IComponent} from "./IComponent";
+import {IComponentInstanceInfo} from "./ComponentInstanceInfo";
 import "reflect-metadata";
 
 export class ComponentRegistry {
     private componentMap: Map<string, any>; //TODO: ADD TYPE TO THIS
-    private eventMap: Map<string, any>; //TODO: ADD TYPE TO THIS
+    private componentInstanceInfoMap: Map<string,
+    IComponentInstanceInfo>;
+
     private static instance: ComponentRegistry;
 
     constructor() {
       this.componentMap = new Map<string, any>();
-      this.eventMap = new Map<string, any[]>();
+      this.componentInstanceInfoMap = new Map<string,
+      IComponentInstanceInfo>();
     }
 
     static getInstance() {
@@ -35,16 +39,40 @@ export class ComponentRegistry {
 
     public addEvent(componentId: string, event: any) { //TODO: replace with types
       //Get current event collection
-      let eventCollection = this.eventMap.get(componentId)
-      ? this.eventMap.get(componentId): [];
+      let componentInstance =
+      this.componentInstanceInfoMap.get(componentId);
 
-      //Push onto the event collection
-      eventCollection.push(event);
-      this.eventMap.set(componentId, eventCollection);
+      if(!componentInstance) {
+        componentInstance = {events: [], watchedAttributes: []};
+      }
+
+      componentInstance.events.push(event);
+      this.componentInstanceInfoMap
+      .set(componentId, componentInstance);
+    }
+
+    public addWatchedAttribute(componentId: string, attribute: string) {
+      //Get current watchedAttributes collection
+      let componentInstance =
+      this.componentInstanceInfoMap.get(componentId);
+
+      if(!componentInstance) {
+        componentInstance = {events: [], watchedAttributes: []};
+      }
+
+      componentInstance.watchedAttributes.push(attribute);
+      this.componentInstanceInfoMap
+      .set(componentId, componentInstance);
     }
 
     public getEvents(componentId: string) {
-      return this.eventMap.get(componentId);
+      return this.componentInstanceInfoMap.get(componentId)
+      .events;
+    }
+
+    public getAttributes(componentId: string) {
+      return this.componentInstanceInfoMap.get(componentId)
+      .watchedAttributes;
     }
 
     public removeComponent(component: IComponent) {

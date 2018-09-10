@@ -1,14 +1,11 @@
 import {ComponentRegistry} from "../lib/ComponentRegistry";
-import {IdGenerator} from "../util/IdGenerator";
+import {DecorationHelper} from "./DecorationHelper";
 import {Logger} from "../util/Logger";
 
 export const Listen = function(eventConfig: any) {
   let componentRegistry = ComponentRegistry.getInstance();
-  return function(target: any,name: string ,descriptor: any) {
-    //TODO: ComponentId can problably be generated in a better location
-    if(!target.componentId) {
-      target.componentId = IdGenerator.generateRandomId();
-    }
+  return function(target: any, name: string ,descriptor: any) {
+    DecorationHelper.ensureComponentId(target);
 
     let originalFunc = descriptor.value;
     descriptor.value = function() {

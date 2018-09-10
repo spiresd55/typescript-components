@@ -32,8 +32,7 @@ export default function(config: CustomComponentConfig) {
       config.template = `<style>${config.style}</style> ${config.template}`;
     }
     template.innerHTML = config.template;
-    //cls.prototype.listeners = [];
-    //cls.prototype.
+
     const connectedCallback = cls.prototype.connectedCallback || function () {};
     cls.prototype.connectedCallback = function() {
 
