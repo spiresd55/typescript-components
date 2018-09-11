@@ -33,8 +33,16 @@ export abstract class Component extends HTMLElement implements IComponent{
     let events =
     this.componentRegistry.getEvents((this as any).componentId);
     //Registering event listeners
+    //TODO: What if event does not have event listeners
     events.forEach((event: any) => {
       event.apply(this);
     });
   }
+
+  attributeChangedCallback(name: any, oldValue: any, newValue: any) {
+    this.onChange(name, oldValue, newValue);
+  }
+
+  //Methods that base class should override
+  onChange(name: any, oldValue: any, newValue: any) {}
 }

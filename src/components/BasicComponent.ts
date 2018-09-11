@@ -62,7 +62,7 @@ export class BasicComponent extends Component {
     console.log("Global Function Called");
   }*/
 
-  attributeChangedCallback(name: any, oldValue: any, newValue: any) {
+  onChange(name: any, oldValue: any, newValue: any) {
     console.log('Custom square element attributes changed.');
     console.log(name);
     console.log(oldValue);
