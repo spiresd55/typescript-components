@@ -3,6 +3,7 @@ import {
 CustomComponent,
 Listen,
 Event,
+Watch,
 KnockoutAttribute,
 ComponentAttribute } from "../decorators/index";
 
@@ -25,15 +26,19 @@ import * as ko from "knockout";
 })
 //@WatchAttribute('random', 'handleRandom')
 export class BasicComponent extends Component {
-  //@ComponentAttribute
-  //random: string;
+  @ComponentAttribute
+  @Watch
+  random: string;
+
+  @Watch
+  random2: string;
 
   //@KnockoutAttribute
   //data: any;
 
   //template:string = 'test template';
 
-  //static get observedAttributes() {return ['random', 'data']; }
+  //static get observedAttributes() {return ['random']; }
   constructor() {
     super();
     console.log("Constructor Called");
@@ -56,6 +61,13 @@ export class BasicComponent extends Component {
   globalFunction(e: any) {
     console.log("Global Function Called");
   }*/
+
+  onChange(name: any, oldValue: any, newValue: any) {
+    console.log('Custom square element attributes changed.');
+    console.log(name);
+    console.log(oldValue);
+    console.log(newValue);
+  }
 
   @Event
   customEvent(data: any) {
